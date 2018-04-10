@@ -39,25 +39,25 @@ int main(){
 //		Player p4(name[3],c1.cards,c1.faceShuff,39,52);
 //	}
 	
-	vector<int> cax=p1.GetCard();
-	for(int i=0;i<26;i++){
-		cout << cax[i] << " ";
-	}
-	cout << endl;
-	vector<string> caf=p1.GetFace();
-	for(int i=0;i<26;i++){
-		cout << caf[i] << " ";
-	}
-	cout << endl;
-		vector<int> cax2=p2.GetCard();
-	for(int i=0;i<26;i++){
-		cout << cax2[i] << " ";
-	}
-	cout << endl;
-	vector<string> caf2=p2.GetFace();
-	for(int i=0;i<26;i++){
-		cout << caf2[i] << " ";
-	}
+//	vector<int> cax=p1.GetCard();
+//	for(int i=0;i<26;i++){
+//		cout << cax[i] << " ";
+//	}
+//	cout << endl;
+//	vector<string> caf=p1.GetFace();
+//	for(int i=0;i<26;i++){
+//		cout << caf[i] << " ";
+//	}
+//	cout << endl;
+//		vector<int> cax2=p2.GetCard();
+//	for(int i=0;i<26;i++){
+//		cout << cax2[i] << " ";
+//	}
+//	cout << endl;
+//	vector<string> caf2=p2.GetFace();
+//	for(int i=0;i<26;i++){
+//		cout << caf2[i] << " ";
+//	}
 
 	
 	

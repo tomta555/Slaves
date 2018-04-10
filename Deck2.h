@@ -66,15 +66,15 @@ vector<string> Player::GetFace(){
 	vector<string> PcardFace = allfaces;
 	return PcardFace;
 }
-bool Player::isKing(){
-	if(cardcount == 0){
-		type = "King";
-		return true;	
-	}else return false;	
-}
-bool isEmptyHand(){
-	if(cardcount == 0){
-		type = "People";
-		return true;	
-	}else return false;	
-}
+//bool Player::isKing(){
+//	if(cardcount == 0){
+//		type = "King";
+//		return true;	
+//	}else return false;	
+//}
+//bool isEmptyHand(){
+//	if(cardcount == 0){
+//		type = "People";
+//		return true;	
+//	}else return false;	
+//}
