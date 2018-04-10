@@ -58,6 +58,8 @@ class Player{
 		void sortface();
 		vector<int> GetCard();
 		vector<string> GetFace();
+		void eraseCard(int);
+		void decCardCount();
 //		vector<int> GetCardd();
 //		vector<string> GetFaced();
 };
@@ -80,6 +82,17 @@ void Player::sortface(){
 	for(int i=0;i<cardcountcst;i++){
 		sortedfaces.push_back(allfaces[sortedcards[i]]);
 	}
+}
+void Player::eraseCard(int idx){
+	vector<int>::iterator loc;
+	int faceIndex;
+	loc=find(sortedcards.begin(),sortedcards.end(),idx);
+	faceIndex=distance(sortedcards.begin(),loc);
+	sortedcards.erase(loc);
+	sortedfaces.erase(sortedfaces.begin()+faceIndex); 
+}
+void Player::decCardCount(){
+	cardcount--;
 }
 //vector<int> Player::GetCardd(){
 //	vector<int> Pcards = plcards;
