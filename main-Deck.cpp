@@ -24,16 +24,24 @@ vector<int> ChooseCard(Player P){
 		order.push_back(i);
 	}
 	for(int i=0;i<cFace.size();i++){
-		cout << order[i] <<" ";
+		if(cFace[i] == "10/5" || cFace[i] == "10/4" || cFace[i] == "10/3" || cFace[i] == "10/6"){
+			cout << "[" << order[i] << "]  " << "|" << cFace[i] << "|" << endl;
+		}else{
+			cout << "	[" << order[i] << "]	" << "|" << cFace[i] << " |" << endl;
+		}
+		//Change UI
+		
+		
 	}
 	cout << "\n";
-	for(int i=0;i<cFace.size();i++){
-		cout << cFace[i]<< " ";
-	}
-	cout << "\n";
+//	for(int i=0;i<cFace.size();i++){
+//		cout << endl << "|" << cFace[i] << "|" << " ";
+//	}
+//	cout << "\n";
 		
 	step1 :
-		cout<<"choose amount card [1] [2] [3] [4] :";
+		cout << "[1] One card, [2] Pair, [3] Three of kind, [4] Four of kind \n\n"; //Add
+		cout << "Choose amount card = " ; //Add
 		cin>>player_action;
 		if(player_action=='1'|| player_action=='2'|| player_action=='3'|| player_action=='4'){
 			goto step2;
@@ -41,27 +49,27 @@ vector<int> ChooseCard(Player P){
 	step2 :	
 		switch(player_action){
 			case '1': 
-					cout << "Choose card from up here:";
+					cout << "Choose your card :";
 					cin>>choose;//
 					getcard.push_back(cardChoose[choose]);//
 					break;
 			case '2':
 					for(int i=0;i<2;i++){
-					cout << "Choose card from up here:";
+					cout << "Choose your card :";
 					cin>>choose;//
 					getcard.push_back(cardChoose[choose]);//
 					}
 					break;
 			case '3':
 					for(int i=0;i<3;i++){
-					cout << "Choose card from up here:";
+					cout << "Choose your card :";
 					cin>>choose;//
 					getcard.push_back(cardChoose[choose]);//
 					}
 					break;
 			case '4':
 					for(int i=0;i<4;i++){
-					cout << "Choose card from up here:";
+					cout << "Choose your card :";
 					cin>>choose;//
 					getcard.push_back(cardChoose[choose]);//
 					}
@@ -70,7 +78,7 @@ vector<int> ChooseCard(Player P){
 	chk=check(getcard);
 	if(chk){
 		getcard.clear();
-		cout << "\n-------- Your card not match, Please choose again--------\n";
+		cout << "\n-------- Your card is not match, Please choose again--------\n";
 		goto step2;
 	}else return getcard;
 }
@@ -81,11 +89,12 @@ int main(){
 	int maxTable;
 	vector<int> hand;
 	start :
-	cout << "2 : 2 Player\n3 : 3 Player\n4 : 4 Player\n";
-	cout << "Select : ";
+	cout << "**** PLEASE PLAY ON FULL-SCREEN or HALF ****\n";
+	cout << "[1] Play with BOT(NOT AVALIABLE!!),[2] 2 Players,[3] 3 Players,[4] 4 Players\n"; //Add
+	cout << "PLAY SELECT : ";  //Add
 	cin >> num;
 	
-	if(num>4) {
+	if(num > 4 || num < 0) {
 		cout << "Please select again\n";
 		goto start;
 	}
@@ -116,10 +125,10 @@ int main(){
 		
 			if(find(gettmp.begin(),gettmp.end(),0) != gettmp.end()){ // Check if who play first
 					state=1;
-					cout << "\n--------Player1 play first--------\n";
+					cout << "\n----------------Player[1] Play FIRST----------------\n\n";
 			}else{
 					state=2;
-					cout << "\n--------Player2 play first--------\n";	
+					cout << "\n----------------Player[2] Play FIRST----------------\n\n";	
 				}
 		
 			if(state==1){
@@ -165,12 +174,12 @@ int main(){
 			if(state==1){
 				
 				getAg1:
-					cout << "\n-------- Table card ";
+					cout << "\n\n------------------------------- Card Table -------------------------------\n\n\n\n\n\n\n\n\n\n\n";
 					for(int i=0;i<Table.size();i++){
-						cout << Table[i] << " ";
+						cout << "		|" << Table[i] << "|  ";
 					}
-					cout << "--------\n";
-				cout << "\n--------Player1 turn--------\n";	
+					cout << "\n\n\n\n\n\n\n\n\n\n\n--------------------------------------------------------------------------\n";
+				cout << "\n\n----------------------------   Player[1] turn   ----------------------------\n\n";	
 				hand.clear();
 				hand=ChooseCard(p1);						// function choose card
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
@@ -192,12 +201,13 @@ int main(){
 				}else if(state==2){
 						
 				getAg2:
-					cout << "\n-------- Table card ";
+					cout << "\n\n------------------------------- Card Table -------------------------------\n\n\n\n\n\n\n\n\n\n\n";
 					for(int i=0;i<Table.size();i++){
-						cout << Table[i] << " ";
+						cout << "		|" << Table[i] << "|  ";
 					}
-					cout << "--------\n";
-				cout << "\n--------Player2 turn--------\n";	
+					
+					cout <<"\n\n\n\n\n\n\n\n\n\n\n--------------------------------------------------------------------------\n";
+				cout << "\n\n----------------------------  Player[2] turn  ----------------------------\n\n";	
 				hand.clear();
 				hand=ChooseCard(p2);							// function choose card
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
@@ -242,6 +252,8 @@ int main(){
 			p3.sortface();
 			p4.sortcard();
 			p4.sortface();
+	}else if(num == 1){
+		
 	}
 
 
