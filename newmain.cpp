@@ -25,7 +25,8 @@ vector<int> ChooseCard(Player P,int turnc ){
 		order.push_back(i);
 	}
 	for(int i=0;i<cFace.size();i++){
-		if(i<=9) cout << order[i] <<"  ";
+		if(i<=9 && (cardChoose[i]>=28&&cardChoose[i]<=31)) cout << order[i] <<"   ";
+		else if(i<=9) cout << order[i] <<"  ";
 		else{
 			if(cardChoose[i]>=28&&cardChoose[i]<=31) cout << order[i] <<"  ";
 			else cout << order[i] <<" ";
