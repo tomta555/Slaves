@@ -60,8 +60,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit2]
-FileName=main-Deck.cpp
+[Unit4]
+FileName=main-game.cpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -70,8 +70,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
-FileName=main-game.cpp
+[Unit2]
+FileName=newmain.cpp
 CompileCpp=1
 Folder=
 Compile=1

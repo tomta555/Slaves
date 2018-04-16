@@ -4,6 +4,7 @@
 using namespace std;
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 char player_action ,player_action0;
+
 bool check(vector<int> card){
 	int temp=card[0]/4;
 	for(int i=0;i<card.size();i++){
@@ -15,42 +16,52 @@ bool check(vector<int> card){
 vector<int> ChooseCard(Player P,int turnc ){
 	bool chk;
 	vector<int> getcard;
-	vector<int> cardChoose=P.GetCard();
 	vector<int> order;
+	vector<int> cardChoose=P.GetCard();
 	vector<string> cFace=P.GetFace();
 	int choose1,choose2,choose3,choose4;
-	
 //	system("cls");
 	for(int i=0;i<cardChoose.size();i++){
 		order.push_back(i);
 	}
 	for(int i=0;i<cFace.size();i++){
-		cout << order[i] <<"  ";
+		if(i<=9) cout << order[i] <<"  ";
+		else{
+			if(cardChoose[i]>=28&&cardChoose[i]<=31) cout << order[i] <<"  ";
+			else cout << order[i] <<" ";
+		} 	
 	}
+	
 	cout << "\n";
 	for(int i=0;i<cFace.size();i++){
-		cout << cFace[i]<< "  ";
+		cout << cFace[i]<< " ";
 	}
 	cout << "\n";
 		
 	step1 :
 		if(turnc==1){
-			cout<<"choose amount card [1] [2] [3] [4] : ";
+			cout<<"choose your action \n [1] 1 card [2] 2 card [3] 3 card [4] 4 card : ";
 			cin>>player_action;
 			if(player_action=='1'or player_action=='2'or player_action=='3'or player_action=='4')
 			goto step2;
 			else goto step1;
 		}
+		else{
+		if (player_action0=='\0'){do{
+			cout<<"choose your action \n [1] 1 card [2] 2 card [3] 3 card [4] 4 card [p] pass: ";
+			cin>>player_action;
+			}while(player_action!='1'and player_action!='2'and player_action!='3'and player_action!='4'and player_action!='p');
+			goto step2;
+		}
 		else if(player_action0=='1'){do{
-				cout<<"choose amount card [1] [3] or pass [p] : ";
+				cout<<"choose your action \n [1] 1 card [3] 3 card [p] pass  : ";
 				cin>>player_action;
 			}while(player_action!='1'and player_action!='3'and player_action!='p');
 			goto step2;
-			
 		}
 		else if(player_action0=='2'){
 			do{
-				cout<<"choose amount card [2] [4] or pass [p] : ";
+				cout<<"choose your action \n [2] 2 card [4] 4 card [p] pass  : ";
 				cin>>player_action;
 			}while(player_action!='2'and player_action!='4'and player_action!='p');
 			goto step2;
@@ -58,51 +69,56 @@ vector<int> ChooseCard(Player P,int turnc ){
 		}
 		else if(player_action0=='3'){
 			do{
-				cout<<"choose amount card [3] or pass [p] : ";
+				cout<<"choose your action \n [3] 3 card [p] pass : ";
 				cin>>player_action;
 			}while(player_action!='3'and player_action!='p');
 			 goto step2;
 		}
 		else if(player_action0=='4'){
 			do{
-				cout<<"choose amount card [4] or pass [p] :";
+				cout<<"choose your action \n [4] 4 card [p] pass :";
 				cin>>player_action;
 			}while(player_action!='4'and player_action!='p');
 			goto step2;
+		}	
 		}
+
 		
 	step2 :
 		switch(player_action){
-			case '1': 	cout << "Choose card from up here:";
-					cin>>choose1;//
+			case '1': 	cout << "Choose card from number up here:";
+					cin>>choose1;
 					getcard.push_back(cardChoose[choose1]);
 					break;
-			case '2':	cout << "Choose card from up here:";
-					cin>>choose1>>choose2;//
+			case '2':	cout << "Choose card from number up here (use space):";
+					cin>>choose1>>choose2;
 					getcard.push_back(cardChoose[choose1]);
 					getcard.push_back(cardChoose[choose2]);
 					break;
-			case '3':	cout << "Choose card from up here:";
-					cin>>choose1>>choose2>>choose3;//
+			case '3':	cout << "Choose card from number up here (use space):";
+					cin>>choose1>>choose2>>choose3;
 					getcard.push_back(cardChoose[choose1]);
 					getcard.push_back(cardChoose[choose2]);
 					getcard.push_back(cardChoose[choose3]);
 					break;
-			case '4':	cout << "Choose card from up here:";
-					cin>>choose1>>choose2>>choose3>>choose4;//
+			case '4':	cout << "Choose card from number up here (use space):";
+					cin>>choose1>>choose2>>choose3>>choose4;
 					getcard.push_back(cardChoose[choose1]);
 					getcard.push_back(cardChoose[choose2]);
 					getcard.push_back(cardChoose[choose3]);
 					getcard.push_back(cardChoose[choose4]);
 					break;
-//			case 'p':
-//			case 'P':return NULL;
-//					break;
+			case 'p':
+			case 'P':{
+				player_action0='\0';
+				return getcard;
+			}
+					
 	}
 	chk=check(getcard);
 	if(chk){
 		getcard.clear();
-		cout << "\n-------- Your card not match, Please choose again--------\n";
+		cout << "\n-------- Your cards not match, Please choose again--------\n";
 		goto step1;
 	}else {
 	player_action0=player_action;
@@ -121,7 +137,9 @@ int main(){
 	int maxCard;
 	int maxTable;
 	vector<int> hand;
+	
 	start :
+		
 	cout << "2 : 2 Player\n3 : 3 Player\n4 : 4 Player\n";
 	cout << "Select : ";
 	cin >> num;
@@ -138,11 +156,14 @@ int main(){
 		getline(cin,name[i]);	
 	}
 	
+	playagain :
+		
 	Deck c1;
 	c1.ShuffleCard();
 	c1.ShuffleFace();
 
 	if(num==2){
+		char paga='\0';
 		vector<string> tmpface=c1.cardFace;
 		vector<string> Table;
 		int state=0;
@@ -218,7 +239,8 @@ int main(){
 					cout << "--------\n";
 				cout << "\n--------Player1 turn--------\n";	
 				hand.clear();
-				hand=ChooseCard(p1,turnc);						// function choose card
+				hand=ChooseCard(p1,turnc);					// function choose card
+				if(hand.size()>0){
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
 					if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
@@ -233,9 +255,20 @@ int main(){
 						}
 						maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
 					}
-					p1.isWin();
-					state=2;
-				}else if(state==2){
+				}else {
+					Table.clear();
+					maxTable=0;
+				}
+				if(p1.isWin()){
+					system("cls");
+					cout << "Player 1 is the Winner!! and now \"KING\" \n";
+					cout << "Do you want to play again ? (Y/N) :";
+					cin >> paga;
+					if(paga=='Y'||paga=='y') goto playagain;
+					else break;
+				}
+				state=2;
+			}else if(state==2){
 						
 				getAg2:
 					cout << "\n-------- Table card ";
@@ -246,6 +279,7 @@ int main(){
 				cout << "\n--------Player2 turn--------\n";	
 				hand.clear();
 				hand=ChooseCard(p2,turnc);							// function choose card
+				if(hand.size()>0){
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
 					if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
@@ -260,7 +294,18 @@ int main(){
 						}
 						maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
 					}
-					p2.isWin();
+				}else {
+					Table.clear();
+					maxTable=0;
+				}
+				if(p2.isWin()){
+					system("cls");
+					cout << "Player 2 is the Winner!! and now \"KING\" \n";
+					cout << "Do you want to play again ? (Y/N) :";
+					cin >> paga;
+					if(paga=='Y'||paga=='y') goto playagain;
+					else break;
+				}
 					state=1;
 				}
 			}
