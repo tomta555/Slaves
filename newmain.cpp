@@ -186,38 +186,38 @@ int main(){
 				}
 		
 			if(state==1){
-				player1:      //Player 1 first play
-			
+				    //Player 1 first play
+				while(true){
+				
 				hand.clear();
 				hand=ChooseCard(p1,turnc);	
-//				if(hand==NULL){
-//				
-//				}						// function choose card
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
 				if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
 					cout << "\n--------Choose your card again--------\n";
-					goto player1;
+					
 				}else{
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
 						p1.eraseCard(hand[i]);			// Erase cards that already used
 						p1.decCardCount();
+					
 					}
 					maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+					break;
+				}
 				}
 				state=2;
 				
 			}else if(state==2){
-				player2:      //Player 2 first play
-			
+				while(true){
 				hand.clear();
 				hand=ChooseCard(p2,turnc);							// function choose card
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
 				if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
 					cout << "\n--------Choose your card again--------\n";
-					goto player2;
+					
 				}else{
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -225,6 +225,8 @@ int main(){
 						p2.decCardCount();
 					}
 					maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+					break;
+				}
 				}
 				state=1;
 			}
@@ -232,7 +234,7 @@ int main(){
 		}else{
 			if(state==1){
 				
-				getAg1:
+				while(true){
 					cout << "\n-------- Table card ";
 					for(int i=0;i<Table.size();i++){
 						cout << Table[i] << " ";
@@ -246,7 +248,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 					if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
 						cout << "\n--------Choose your card again--------\n";
-						goto getAg1;
+						
 					}else{
 						Table.clear();
 						for(int i=0;i<hand.size();i++){
@@ -255,10 +257,14 @@ int main(){
 							p1.decCardCount();
 						}
 						maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+						break;
 					}
+					
 				}else {
 					Table.clear();
 					maxTable=0;
+					break;
+				}
 				}
 				if(p1.isWin()){
 					system("cls");
@@ -271,7 +277,8 @@ int main(){
 				state=2;
 			}else if(state==2){
 						
-				getAg2:
+				while(true){
+				
 					cout << "\n-------- Table card ";
 					for(int i=0;i<Table.size();i++){
 						cout << Table[i] << " ";
@@ -285,7 +292,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 					if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
 						cout << "\n--------Choose your card again--------\n";
-						goto getAg2;
+						
 					}else{
 						Table.clear();
 						for(int i=0;i<hand.size();i++){
@@ -294,10 +301,13 @@ int main(){
 							p2.decCardCount();
 						}
 						maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+						break;
 					}
 				}else {
 					Table.clear();
 					maxTable=0;
+					break;
+				}
 				}
 				if(p2.isWin()){
 					system("cls");
@@ -322,6 +332,200 @@ int main(){
 			p2.sortface();
 			p3.sortcard();
 			p3.sortface();
+			
+		char paga='\0';
+		vector<string> tmpface=c1.cardFace;
+		vector<string> Table;
+		int state=0;
+		int turnc=1;
+		vector<int> gettmp;
+		vector<int> gettmp2;
+		gettmp=p1.GetCard();
+		gettmp2=p1.GetCard();
+		int pass=0;
+		while(true){
+		if(turnc==1){
+			
+			if(find(gettmp.begin(),gettmp.end(),0) != gettmp.end()){ // Check if who play first
+					state=1;
+					cout << "\n--------Player1 play first--------\n";
+			}else if(find(gettmp2.begin(),gettmp2.end(),0) != gettmp2.end()){
+					state=2;
+					cout << "\n--------Player2 play first--------\n";	
+				
+			}else{
+					state=3;
+					cout << "\n--------Player3 play first--------\n";	
+				}
+			if(state==1){
+				    //Player 1 first play
+				while(true){
+				
+				hand.clear();
+				hand=ChooseCard(p1,turnc);	
+				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
+				maxCard=moreCard(hand,maxCard);
+				if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
+					cout << "\n--------Choose your card again--------\n";
+					
+				}else{
+					for(int i=0;i<hand.size();i++){
+						Table.push_back(tmpface[hand[i]]);
+						p1.eraseCard(hand[i]);			// Erase cards that already used
+						p1.decCardCount();
+					
+					}
+					maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+					break;
+				}
+				}
+				state=2;
+				
+			}else if(state==2){
+				while(true){
+				hand.clear();
+				hand=ChooseCard(p2,turnc);							// function choose card
+				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
+				maxCard=moreCard(hand,maxCard);
+				if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
+					cout << "\n--------Choose your card again--------\n";
+					
+				}else{
+					for(int i=0;i<hand.size();i++){
+						Table.push_back(tmpface[hand[i]]);
+						p2.eraseCard(hand[i]);			// Erase cards that already used
+						p2.decCardCount();
+					}
+					maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+					break;
+				}
+				}
+				state=3;
+			}else if(state==3){
+				while(true){
+				hand.clear();
+				hand=ChooseCard(p3,turnc);							// function choose card
+				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
+				maxCard=moreCard(hand,maxCard);
+				if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
+					cout << "\n--------Choose your card again--------\n";
+					
+				}else{
+					for(int i=0;i<hand.size();i++){
+						Table.push_back(tmpface[hand[i]]);
+						p3.eraseCard(hand[i]);			// Erase cards that already used
+						p3.decCardCount();
+					}
+					maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+					break;
+				}
+				}
+				state=1;
+			}
+			turnc++;
+			
+					
+		}else{
+			if(state==1){
+				if(pass==2)pass=0;
+			
+				while(true){
+					cout << "\n-------- Table card ";
+					for(int i=0;i<Table.size();i++){
+						cout << Table[i] << " ";
+					}
+					cout << "--------\n";
+				cout << "\n--------Player1 turn--------\n";	
+				hand.clear();
+				hand=ChooseCard(p1,turnc);					// function choose card
+				if(hand.size()>0){
+				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
+				maxCard=moreCard(hand,maxCard);
+					if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
+						cout << "\n--------Choose your card again--------\n";
+						
+					}else{
+						Table.clear();
+						for(int i=0;i<hand.size();i++){
+							Table.push_back(tmpface[hand[i]]);
+							p1.eraseCard(hand[i]);			// Erase cards that already used
+							p1.decCardCount();
+						}
+						maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+						break;
+					}
+					
+				}else {
+					pass++;
+					if(pass==1){ //first pass
+//					if(p2pass)state=3;
+//					else state=2;
+						break;
+					}else if(pass==2){
+						Table.clear();
+						maxTable=0;
+					break;
+					}
+					
+				}
+				}
+				if(p1.isWin()){
+					system("cls");
+					cout << "Player 1 is the Winner!! and now \"KING\" \n";
+					cout << "Do you want to play again ? (Y/N) :";
+					cin >> paga;
+					if(paga=='Y'||paga=='y') goto playagain;
+					else break;
+				}
+				
+				state=2;
+			}else if(state==2){
+						
+				while(true){
+				
+					cout << "\n-------- Table card ";
+					for(int i=0;i<Table.size();i++){
+						cout << Table[i] << " ";
+					}
+					cout << "--------\n";
+				cout << "\n--------Player2 turn--------\n";	
+				hand.clear();
+				hand=ChooseCard(p2,turnc);							// function choose card
+				if(hand.size()>0){
+				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
+				maxCard=moreCard(hand,maxCard);
+					if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
+						cout << "\n--------Choose your card again--------\n";
+						
+					}else{
+						Table.clear();
+						for(int i=0;i<hand.size();i++){
+							Table.push_back(tmpface[hand[i]]);
+							p2.eraseCard(hand[i]);			// Erase cards that already used
+							p2.decCardCount();
+						}
+						maxTable=maxCard;					// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+						break;
+					}
+				}else {
+					Table.clear();
+					maxTable=0;
+					break;
+				}
+				}
+				if(p2.isWin()){
+					system("cls");
+					cout << "Player 2 is the Winner!! and now \"KING\" \n";
+					cout << "Do you want to play again ? (Y/N) :";
+					cin >> paga;
+					if(paga=='Y'||paga=='y') goto playagain;
+					else break;
+				}
+					state=1;
+				}
+			}
+		}
+				
 	}else if(num==4){
 		Player p1(name[0],c1.cardFace,c1.cards,c1.faceShuff,0,13);
 		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,13,26);
