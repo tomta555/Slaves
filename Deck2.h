@@ -52,14 +52,17 @@ class Player{
 	public:
 		
 		Player(string,vector<string>,vector<int>,vector<string>,int,int);
+		bool plpass;
+		vector<int> GetCard();
+		vector<string> GetFace();
 		bool isWin();
 		bool isEmptyHand();
 		void sortcard();
 		void sortface();
-		vector<int> GetCard();
-		vector<string> GetFace();
 		void eraseCard(int);
 		void decCardCount();
+		void pass();
+		void newturn();
 //		vector<int> GetCardd();
 //		vector<string> GetFaced();
 };
@@ -67,6 +70,7 @@ Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int f
 	allfaces = af;
 	name = n;
 	type = "People";
+	plpass=false;
 	cardcountcst=last-first;
 	cardcount=last-first;
 	for(int i=first;i<last;i++){
@@ -74,6 +78,12 @@ Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int f
 		plfaces.push_back(f[i]);
 	}
 	sortedcards=plcards;
+}
+void Player::pass(){
+	plpass=true;
+}
+void Player::newturn(){
+	plpass=false;
 }
 void Player::sortcard(){
 	sort(sortedcards.begin(),sortedcards.end());
