@@ -46,7 +46,7 @@ int main(){
 		vector<string> Table;
 		int state=0;
 		int turnc=1;
-		int pcount=0;
+		bool T_empty=true;
 		vector<int> gettmp;
 		Player p1(name[0],c1.cardFace,c1.cards,c1.faceShuff,0,26);   // get cards from deck
 		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,26,52);
@@ -66,7 +66,7 @@ int main(){
 				    
 				while(true){
 				hand.clear();
-				hand=ChooseCard(p1,pcount);
+				hand=ChooseCard(p1,T_empty);
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
 				if(find(hand.begin(),hand.end(),0) != hand.end()){
@@ -86,7 +86,7 @@ int main(){
 				
 				while(true){
 				hand.clear();
-				hand=ChooseCard(p2,pcount);							// function choose card
+				hand=ChooseCard(p2,T_empty);							// function choose card
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
 				if(find(hand.begin(),hand.end(),0) != hand.end()){
@@ -106,6 +106,8 @@ int main(){
 			turnc++;	
 				
 		}else{
+			if(Table.size()>0) T_empty=false;
+			else T_empty=true;
 			if(state==1){
 				
 				while(true){
@@ -116,7 +118,7 @@ int main(){
 					cout << "--------\n";
 				cout << "\n--------Player1 turn--------\n";	
 				hand.clear();
-				hand=ChooseCard(p1,pcount);					// function choose card
+				hand=ChooseCard(p1,T_empty);					// function choose card
 				if(hand.size()>0){
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
@@ -136,6 +138,8 @@ int main(){
 				}else {
 					Table.clear();
 					maxTable=0;
+					p1.newturn();
+					p2.newturn();
 					break;
 				}
 				}
@@ -162,7 +166,7 @@ int main(){
 					cout << "--------\n";
 				cout << "\n--------Player2 turn--------\n";	
 				hand.clear();
-				hand=ChooseCard(p2,pcount);							// function choose card
+				hand=ChooseCard(p2,T_empty);							// function choose card
 				if(hand.size()>0){
 				maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 				maxCard=moreCard(hand,maxCard);
@@ -181,6 +185,8 @@ int main(){
 				}else {
 					Table.clear();
 					maxTable=0;
+					p1.newturn();
+					p2.newturn();
 					break;
 				}
 				}
