@@ -216,6 +216,8 @@ int main(){
 		vector<string> tmpface=c1.cardFace;
 		vector<string> Table;
 		int state=0;
+		int kingchk=0;
+		int endchk=0;
 		int turnc=1;
 		bool T_empty=true;
 		vector<int> gettmp;
@@ -301,14 +303,21 @@ int main(){
 		turnc++;	
 			
 		}else{
+			
 			if(Table.size()>0) T_empty=false;
 			else T_empty=true;
+			
 			if(state==1){
-
-		
+				
+				if(p2.plpass&&pass==2){
+					p1.newturn();
+					p2.newturn();
+					p3.newturn();
+				}					
 				if(pass==2)pass=0;
 			
 				while(true){
+				if(kingchk==1)break;
 					cout << "\n-------- Table card ";
 					for(int i=0;i<Table.size();i++){
 						cout << Table[i] << " ";
@@ -341,6 +350,8 @@ int main(){
 					}else if(pass==2){
 						Table.clear();
 						maxTable=0;
+						if(p2.plpass)state=3;
+						else state=2;
 						p1.newturn();
 						p2.newturn();
 						p3.newturn();
@@ -349,22 +360,38 @@ int main(){
 				}
 				
 				}
-				if(p1.isWin()){
-					system("cls");
-					cout << "Player 1 is the Winner!! and now \"KING\" \n";
-					cout << "Play again ?\n";
-					cout << "[Y] play again [N] Exit to main menu [E] Exit :";
-					cin >> paga;
+				if(kingchk==0){
+					if(p1.isWin()){
+						system("cls");
+						cout << "Player 1 is the Winner!! and now \"KING\" \n";
+						kingchk=1;
+						endchk+=1;
+					}
+				}else {
+					if(p1.isEmptyHand()&&kingchk!=1){
+						system("cls");
+						endchk+=1;
+						if(endchk==2) cout << "You are now People\n";
+						else cout << "You are now Slave";
+						if(endchk==3){
+							cout << "Play again ?\n";
+							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
+							cin >> paga;
+							if(paga=='Y'||paga=='y') goto playagain;
+							else if(paga=='N'||paga=='n') goto mainmenu;
+							else if(paga=='E'||paga=='e') break;
+						}
+						
+					}
 					
-					if(paga=='Y'||paga=='y') goto playagain;
-					else if(paga=='N'||paga=='n') goto mainmenu;
-					else if(paga=='E'||paga=='e') break;
 				}
-				if(p2.plpass)state=3;
-				else state=2;
+				if(pass!=2){
+					if(p2.plpass)state=3;			
+					else state=2;
+				}
 				
-			}else if(state==2){
-
+				
+			}else if(state==2){	
 				if(pass==2)pass=0;
 				while(true){
 					cout << "\n-------- Table card ";
@@ -398,6 +425,8 @@ int main(){
 					}else if(pass==2){
 						Table.clear();
 						maxTable=0;
+						if(p3.plpass)state=1;
+						else state=3;
 						p1.newturn();
 						p2.newturn();
 						p3.newturn();
@@ -405,19 +434,36 @@ int main(){
 					}
 					}
 				}
-				if(p2.isWin()){
-					system("cls");
-					cout << "Player 2 is the Winner!! and now \"KING\" \n";
-					cout << "Play again ?\n";
-					cout << "[Y] play again [N] Exit to main menu [E] Exit :";
-					cin >> paga;
+				if(kingchk==0){
+					if(p2.isWin()){
+						system("cls");
+						cout << "Player 2 is the Winner!! and now \"KING\" \n";
+						kingchk=2;
+						endchk+=1;
+					}
+				}else {
+					if(p2.isEmptyHand()&&kingchk!=2){
+						system("cls");
+						endchk+=1;
+						if(endchk==2) cout << "You are now People\n";
+						else cout << "You are now Slave";
+						if(endchk==3){
+							cout << "Play again ?\n";
+							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
+							cin >> paga;
+							if(paga=='Y'||paga=='y') goto playagain;
+							else if(paga=='N'||paga=='n') goto mainmenu;
+							else if(paga=='E'||paga=='e') break;
+						}
+						
+					}
 					
-					if(paga=='Y'||paga=='y') goto playagain;
-					else if(paga=='N'||paga=='n') goto mainmenu;
-					else if(paga=='E'||paga=='e') break;
 				}
-				if(p3.plpass)state=1;
-				else state=3;
+				if(pass!=2){
+					if(p3.plpass)state=1;			
+					else state=3;	
+				}
+			
 			}else if(state==3){
 
 				if(pass==2)pass=0;
@@ -453,7 +499,9 @@ int main(){
 							break;
 						}else if(pass==2){
 							Table.clear();
-							maxTable=0;			
+							maxTable=0;
+							if(p1.plpass)state=2;
+							else state=1;
 							p1.newturn();
 							p2.newturn();
 							p3.newturn();
@@ -461,19 +509,35 @@ int main(){
 						}	
 					}
 				}
-				if(p3.isWin()){
-					system("cls");
-					cout << "Player 3 is the Winner!! and now \"KING\" \n";
-					cout << "Play again ?\n";
-					cout << "[Y] play again [N] Exit to main menu [E] Exit :";
-					cin >> paga;
+				if(kingchk==0){
+					if(p3.isWin()){
+						system("cls");
+						cout << "Player 3 is the Winner!! and now \"KING\" \n";
+						kingchk=2;
+						endchk+=1;
+					}
+				}else {
+					if(p3.isEmptyHand()&&kingchk!=1){
+						system("cls");
+						endchk+=1;
+						if(endchk==2) cout << "You are now People\n";
+						else cout << "You are now Slave";
+						if(endchk==3){
+							cout << "Play again ?\n";
+							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
+							cin >> paga;
+							if(paga=='Y'||paga=='y') goto playagain;
+							else if(paga=='N'||paga=='n') goto mainmenu;
+							else if(paga=='E'||paga=='e') break;
+						}
+						
+					}
 					
-					if(paga=='Y'||paga=='y') goto playagain;
-					else if(paga=='N'||paga=='n') goto mainmenu;
-					else if(paga=='E'||paga=='e') break;
 				}
-				if(p1.plpass)state=2;
-				else state=1;
+				if(pass!=2){
+					if(p1.plpass)state=2;
+					else state=1;
+				}
 			}
 			turnc++;
 			}
