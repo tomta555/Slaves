@@ -55,6 +55,8 @@ class Player{
 		bool plpass;
 		vector<int> GetCard();
 		vector<string> GetFace();
+		string Getname();
+		string Gettype();
 		bool isWin();
 		bool isEmptyHand();
 		void sortcard();
@@ -63,7 +65,8 @@ class Player{
 		void decCardCount();
 		void pass();
 		void newturn();
-//		vector<int> GetCardd();
+		void typechange(string);
+		//		vector<int> GetCardd();
 //		vector<string> GetFaced();
 };
 Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int first,int last){
@@ -78,6 +81,15 @@ Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int f
 		plfaces.push_back(f[i]);
 	}
 	sortedcards=plcards;
+}
+void Player::typechange(string x){
+	type = x;
+}
+string Player::Gettype(){
+	return type;
+}
+string Player::Getname(){
+	return name;
 }
 void Player::pass(){
 	plpass=true;
@@ -122,13 +134,11 @@ vector<string> Player::GetFace(){
 }
 bool Player::isWin(){
 	if(cardcount == 0){
-		type = "King";
 		return true;	
 	}else return false;	
 }
 bool Player::isEmptyHand(){
 	if(cardcount == 0){
-		type = "People";
 		return true;	
 	}else return false;	
 }
