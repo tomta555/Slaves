@@ -15,7 +15,7 @@ class Deck{
 		Deck();
 		void ShuffleCard();
 		void ShuffleFace();
-//		vector<string> GetDeckFace();
+
 };
 Deck::Deck(){
 	string vectmp[52]={"3\5","3\4","3\3","3\6","4\5","4\4","4\3","4\6","5\5","5\4","5\3","5\6","6\5","6\4","6\3","6\6","7\5","7\4","7\3","7\6","8\5","8\4","8\3","8\6",
@@ -36,9 +36,7 @@ void Deck::ShuffleFace(){
 		faceShuff.push_back(cardFace[cards[i]]);
 	}
 }
-//vector<string> Deck::GetDeckFace(){
-//	return cardFace;
-//}
+
 
 class Player{
 	string name;
@@ -66,8 +64,7 @@ class Player{
 		void pass();
 		void newturn();
 		void typechange(string);
-		//		vector<int> GetCardd();
-//		vector<string> GetFaced();
+
 };
 Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int first,int last){
 	allfaces = af;
@@ -116,14 +113,7 @@ void Player::eraseCard(int idx){
 void Player::decCardCount(){
 	cardcount--;
 }
-//vector<int> Player::GetCardd(){
-//	vector<int> Pcards = plcards;
-//	return Pcards;
-//}
-//vector<string> Player::GetFaced(){
-//	vector<string> PcardFace = plfaces;
-//	return PcardFace;
-//}
+
 vector<int> Player::GetCard(){
 	vector<int> Pcards = sortedcards;
 	return Pcards;

@@ -831,8 +831,7 @@ vector<int> ChooseCard(Player P,bool t_empty){
   				getcard.push_back(cardChoose[n]);
   				get1tmp=getcard.size();
 			}
-
-
+			if(getcard.size()==0) goto step1;
 		}while(getcard.size()>4);
 		}else {
 				do{
@@ -844,15 +843,13 @@ vector<int> ChooseCard(Player P,bool t_empty){
 			int n;
 			while(stream >> n) {
   				getcard.push_back(cardChoose[n]);
-  			if(!stream)
-  		    	break;
 			}
-		
+			if(getcard.size()==0) goto step1;
 		}while(getcard.size()>4);
+		
 		if(strget=="P"||strget=="p")return getcard;
 		if(get1tmp%2==getcard.size()%2) get1tmp=getcard.size();
 		else goto step1;
-	
 		}
 		
 		
