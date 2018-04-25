@@ -13,6 +13,8 @@ int moreCard(vector<int> ,int);
 int main(){
 	mainmenu :
 	srand(unsigned(time(NULL)));
+	string K="King",P="People",S="Slave";
+	int lKing,lSlave;
 	int num;
 	int maxCard;
 	int maxTable;
@@ -247,11 +249,42 @@ int main(){
 			}
 		}
 		
-	}else if(num==3){ 
+	}else if(num==3){
+		
 		Player p1(name[0],c1.cardFace,c1.cards,c1.faceShuff,0,17);
 		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,17,34);
 		Player p3(name[2],c1.cardFace,c1.cards,c1.faceShuff,34,52); //  1 more card than other
 		p1.sortcard();p1.sortface();p2.sortcard();p2.sortface();p3.sortcard();p3.sortface();
+		
+		if(round>1){
+			switch(lKing){
+				case 1:
+					p1.typechange(K);
+					break;
+				case 2: 
+					p2.typechange(K);
+					break;
+				case 3:
+					p3.typechange(K);
+					break;
+			}
+			switch(lSlave){
+				case 1:
+					p1.typechange(S);
+					break;
+				case 2: 
+					p2.typechange(S);
+					break;
+				case 3:
+					p3.typechange(S);
+					break;
+			}
+	
+		}
+		system("cls");
+		cout << p1.Getname() << " is " << p1.Gettype() <<"\n\n"; 
+		cout << p2.Getname() << " is " << p2.Gettype() <<"\n\n"; 
+		cout << p3.Getname() << " is " << p3.Gettype() <<"\n\n"; 
 		
 		bool kprintchk=true;
 		char paga='\0';
@@ -282,13 +315,13 @@ int main(){
 					cout <<"\n--------" << p3.Getname() <<" play first--------\n";
 				}
 			}else {
-				if(p1.Gettype()=="Slave"){
+				if(p1.Gettype()==S){
 					state=1;
 					cout <<"\n--------" << p1.Getname() <<" play first--------\n";
-				}else if(p2.Gettype()=="Slave"){
+				}else if(p2.Gettype()==S){
 					state=2;
 					cout <<"\n--------" << p2.Getname() <<" play first--------\n";	
-				}else if(p3.Gettype()=="Slave"){
+				}else if(p3.Gettype()==S){
 					state=3;
 					cout <<"\n--------" << p3.Getname() <<" play first--------\n";
 				}
@@ -303,21 +336,17 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 					
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 					
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
-						p1.eraseCard(hand[i]);
-									
+						p1.eraseCard(hand[i]);			
 						p1.decCardCount();
-						
-						
+							
 					}
-					cout<< " Ha123";
-					maxTable=maxCard;
-					cout<< " Ha1";					
+					maxTable=maxCard;				
 					break;
-//				}else cout << "\n--------No 3\5 in your card, choose your card again--------\n\n"; 
+				}else cout << "\n--------No 3\5 in your card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -340,7 +369,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 			
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 						
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -352,9 +381,9 @@ int main(){
 					}
 
 					maxTable=maxCard;	
-			// if value of cards on hand > value of cards on table you can use that cards -> put card on table
+
 					break;
-//				}else cout << "\n--------No 3\5 in your card, choose your card again--------\n\n"; 
+				}else cout << "\n--------No 3\5 in your card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -377,7 +406,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 				
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 				
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -390,7 +419,7 @@ int main(){
 
 					maxTable=maxCard;				// if value of cards on hand > value of cards on table you can use that cards -> put card on table
 					break;
-//				}else cout << "\n--------No 3\5 in your card, choose your card again--------\n\n"; 
+				}else cout << "\n--------No 3\5 in your card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -406,20 +435,20 @@ int main(){
 		turnc++;	
 			
 		}else{
-//			system("cls");
+			system("cls");
 			
-//			if(kingchk==1&&kprintchk) {
-//				cout << p1.Getname()<<"is the Winner!! and now \"KING\" \n";
-//				kprintchk=false;
-//			}
-//			else if(kingchk==2&&kprintchk) {
-//				cout << p2.Getname()<<"is the Winner!! and now \"KING\" \n";
-//				kprintchk=false;
-//			}
-//			else if(kingchk==3&&kprintchk)  {
-//				cout << p3.Getname()<<"is the Winner!! and now \"KING\" \n";
-//				kprintchk=false;
-//			}
+			if(kingchk==1&&kprintchk) {
+				cout << p1.Getname()<<"is the Winner!! and now \"KING\" \n";
+				kprintchk=false;
+			}
+			else if(kingchk==2&&kprintchk) {
+				cout << p2.Getname()<<"is the Winner!! and now \"KING\" \n";
+				kprintchk=false;
+			}
+			else if(kingchk==3&&kprintchk)  {
+				cout << p3.Getname()<<"is the Winner!! and now \"KING\" \n";
+				kprintchk=false;
+			}
 			if(Table.size()>0) T_empty=false;
 			else T_empty=true;
 			
@@ -480,25 +509,27 @@ int main(){
 				if(kingchk==0){
 					if(round==1){
 						if(p1.isWin()){
-							p1.typechange("King");
+							lKing=1;
 							system("cls");
 							kingchk=1;
 							endchk+=1;
 						}
 					}else {
-						if(p1.isWin()&&p1.Gettype()=="King"){
+						if(p1.isWin()&&p1.Gettype()==K){
 							system("cls");
 							kingchk=1;
 							endchk+=1;
-						}else if(p1.isWin()&&p1.Gettype()!="King"){
-							p1.typechange("King");
-							if(p2.Gettype()=="King"){
+						}else if(p1.isWin()&&p1.Gettype()!=K){
+							kingchk=1;
+							endchk+=1;
+							lKing=1;
+							if(p2.Gettype()==K){
 								cout << p1.Getname() << " is new King!! and "<< p2.Getname() <<" is slave\n";
-								p2.typechange("Slave");
+								lSlave=2;
 							}
-							else if(p3.Gettype()=="King"){
+							else if(p3.Gettype()==K){
 								cout << p1.Getname() << " is new King!! and "<< p3.Getname() <<" is slave\n";
-								p3.typechange("Slave");
+								lSlave=3;
 							}
 							cout << "Play again ?\n";
 							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
@@ -516,12 +547,12 @@ int main(){
 								system("cls");
 								cout << "You are People\n";
 								if(kingchk==2) {
-									cout << p3.Getname() <<"is now slave \n ";
-									p3.typechange("Slave");
+									cout << p3.Getname() <<" is now slave \n ";
+									lSlave=3;
 								}
 								else {
-									cout << p2.Getname() <<"is now slave \n ";
-									p2.typechange("Slave");
+									cout << p2.Getname() <<" is now slave \n ";
+									lSlave=2;
 								}
 								cout << "Play again ?\n";
 								cout << "[Y] play again [N] Exit to main menu [E] Exit :";
@@ -538,7 +569,7 @@ int main(){
 				}
 				
 				
-			}else if(state==2){	
+			}else if(state==2){
 				if(pass==2)pass=0;
 				while(true){
 					if(kingchk==2)break;
@@ -586,25 +617,27 @@ int main(){
 				if(kingchk==0){
 					if(round==1){
 						if(p2.isWin()){
-							p2.typechange("King");
+							lKing=2;
 							system("cls");
-							kingchk=1;
+							kingchk=2;
 							endchk+=1;
 						}
 					}else {
-						if(p2.isWin()&&p2.Gettype()=="King"){
+						if(p2.isWin()&&p2.Gettype()==K){
 							system("cls");
-							kingchk=1;
+							kingchk=2;
 							endchk+=1;
-						}else if(p2.isWin()&&p2.Gettype()!="King"){
-							p2.typechange("King");
-							if(p1.Gettype()=="King"){
+						}else if(p2.isWin()&&p2.Gettype()!=K){
+							kingchk=2;
+							endchk+=1;
+							lKing=2;
+							if(p1.Gettype()==K){
 								cout << p2.Getname() << " is new King!! and "<< p1.Getname() <<" is slave\n";
-								p2.typechange("Slave");
+								lSlave=1;
 							}
-							else if(p3.Gettype()=="King"){
+							else if(p3.Gettype()==K){
 								cout << p2.Getname() << " is new King!! and "<< p3.Getname() <<" is slave\n";
-								p3.typechange("Slave");
+								lSlave=3;
 							}
 							cout << "Play again ?\n";
 							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
@@ -622,12 +655,12 @@ int main(){
 							round++;
 							cout << "You are People\n";
 							if(kingchk==1) {
-								cout << p3.Getname() <<"is now slave \n ";
-								p3.typechange("Slave");
+								cout << p3.Getname() <<" is now slave \n ";
+								lSlave=3;
 							}
 							else {
-								cout << p1.Getname() <<"is now slave \n ";
-								p1.typechange("Slave");
+								cout << p1.Getname() <<" is now slave \n ";
+								lSlave=1;
 							}
 							cout << "Play again ?\n";
 							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
@@ -695,25 +728,27 @@ int main(){
 				if(kingchk==0){
 					if(round==1){
 						if(p3.isWin()){
-							p3.typechange("King");
+							lKing=3;
 							system("cls");
-							kingchk=1;
+							kingchk=3;
 							endchk+=1;
 						}
 					}else {
-						if(p3.isWin()&&p3.Gettype()=="King"){
+						if(p3.isWin()&&p3.Gettype()==K){
 							system("cls");
-							kingchk=1;
+							kingchk=3;
 							endchk+=1;
-						}else if(p3.isWin()&&p3.Gettype()!="King"){
-							p3.typechange("King");
-							if(p1.Gettype()=="King"){
+						}else if(p3.isWin()&&p3.Gettype()!=K){
+							kingchk=3;
+							endchk+=1;
+							lKing=3;
+							if(p1.Gettype()==K){
 								cout << p3.Getname() << " is new King!! and "<< p1.Getname() <<" is slave\n";
-								p1.typechange("Slave");
+								lSlave=2;
 							}
-							else if(p2.Gettype()=="King"){
+							else if(p2.Gettype()==K){
 								cout << p3.Getname() << " is new King!! and "<< p2.Getname() <<" is slave\n";
-								p2.typechange("Slave");
+								lSlave=2;
 							}
 							cout << "Play again ?\n";
 							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
@@ -731,12 +766,12 @@ int main(){
 							round++;
 							cout << "You are now People\n";
 							if(kingchk==1) {
-								cout << p2.Getname() <<"is now slave \n ";
-								p2.typechange("Slave");
+								cout << p2.Getname() <<" is now slave \n ";
+								lSlave=2;
 							}
 							else {
-								cout << p1.Getname() <<"is now slave \n ";
-								p1.typechange("Slave");
+								cout << p1.Getname() <<" is now slave \n ";
+								lSlave=1;
 							}
 							cout << "Play again ?\n";
 							cout << "[Y] play again [N] Exit to main menu [E] Exit :";
@@ -849,7 +884,10 @@ vector<int> ChooseCard(Player P,bool t_empty){
 		
 		if(strget=="P"||strget=="p")return getcard;
 		if(get1tmp%2==getcard.size()%2) get1tmp=getcard.size();
-		else goto step1;
+		else {
+			cout << "\n--------Please choose again--------\n";
+			goto step1;
+		}
 		}
 		
 		
