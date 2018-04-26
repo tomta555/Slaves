@@ -7,13 +7,17 @@ using namespace std;
 char player_action ,player_action0,pa_tmp;
 int get1tmp;
 bool check(vector<int>);
-vector<int> ChooseCard(Player,bool);
+vector<int> ChooseCard(Player, bool);
 int moreCard(vector<int> ,int);
+vector<int> TradeCard(Player, bool);
+bool is_digits(const string &);
 
 int main(){
 	mainmenu :
 	srand(unsigned(time(NULL)));
 	string K="King",P="People",S="Slave";
+	vector<int> cardslave;
+	vector<int> cardking;
 	int lKing,lSlave;
 	int num;
 	int maxCard;
@@ -280,8 +284,24 @@ int main(){
 		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,17,34);
 		Player p3(name[2],c1.cardFace,c1.cards,c1.faceShuff,34,52); //  1 more card than other
 		p1.sortcard();p1.sortface();p2.sortcard();p2.sortface();p3.sortcard();p3.sortface();
+		bool kprintchk=true;
+		char paga='\0';
+		vector<string> tmpface=c1.cardFace;
+		vector<string> Table;
+		int state=0;
+		int kingchk=0;
+		int endchk=0;
+		int turnc=1;
+		bool T_empty=true;
+		vector<int> gettmp;
+		vector<int> gettmp2;
+		gettmp=p1.GetCard();
+		gettmp2=p2.GetCard();
+		int pass=0;
+		int playernum=3;
 		
 		if(round>1){
+			
 			switch(lKing){
 				case 1:
 					p1.typechange(K);
@@ -303,28 +323,102 @@ int main(){
 				case 3:
 					p3.typechange(S);
 					break;
-			}
-	
+			}	
 		}
-		system("cls");
-		cout << p1.Getname() << " is " << p1.Gettype() <<"\n\n"; 
-		cout << p2.Getname() << " is " << p2.Gettype() <<"\n\n"; 
-		cout << p3.Getname() << " is " << p3.Gettype() <<"\n\n"; 
 		
-		bool kprintchk=true;
-		char paga='\0';
-		vector<string> tmpface=c1.cardFace;
-		vector<string> Table;
-		int state=0;
-		int kingchk=0;
-		int endchk=0;
-		int turnc=1;
-		bool T_empty=true;
-		vector<int> gettmp;
-		vector<int> gettmp2;
-		gettmp=p1.GetCard();
-		gettmp2=p2.GetCard();
-		int pass=0;
+		
+		system("cls");
+		if(round>1){
+		
+		cout <<"-------------" << p1.Getname() << " is " << p1.Gettype() <<"-------------"<<"\n\n"; 
+		cout <<"-------------" << p2.Getname() << " is " << p2.Gettype() <<"-------------"<<"\n\n"; 
+		cout <<"-------------" << p3.Getname() << " is " << p3.Gettype() <<"-------------"<<"\n\n"; 
+		
+		cout<< "-----------------King select 2 cards to trade with slave-----------------\n";
+		cin.ignore();
+		if(lSlave==1){
+			cardslave.push_back(p1.popbackcard());
+			p1.eraseCard(cardslave[0]);
+			cardslave.push_back(p1.popbackcard());
+			p1.eraseCard(cardslave[1]);	
+		}else if(lSlave==2){
+			cardslave.push_back(p2.popbackcard());
+			p2.eraseCard(cardslave[0]);
+			cardslave.push_back(p2.popbackcard());
+			p2.eraseCard(cardslave[1]);					
+		}else if(lSlave==3){
+			cardslave.push_back(p3.popbackcard());
+			p3.eraseCard(cardslave[0]);
+			cardslave.push_back(p3.popbackcard());
+			p3.eraseCard(cardslave[1]);				
+		}
+
+		switch(lKing){
+				case 1:{
+					do{
+						cardking.clear();
+						cardking=TradeCard(p1,T_empty);						
+					}while(cardking.size()!=2);	
+					p1.eraseCard(cardking[0]);
+					p1.eraseCard(cardking[1]);
+					p1.addcard(cardslave[0]);
+					p1.addcard(cardslave[1]);
+					p1.sortcard();p1.sortface();
+					break;
+				}
+					
+				case 2: {
+					do{
+
+						cardking.clear();
+						cardking=TradeCard(p2,T_empty);
+					}while(cardking.size()!=2);
+					p2.eraseCard(cardking[0]);
+					p2.eraseCard(cardking[1]);
+					p2.addcard(cardslave[0]);
+					p2.addcard(cardslave[1]);
+					p2.sortcard();p2.sortface();				
+					break;					
+				}
+
+				case 3:{
+					do{
+
+						cardking.clear();
+						cardking=TradeCard(p3,T_empty);
+					}while(cardking.size()!=2);
+					p3.eraseCard(cardking[0]);
+					p3.eraseCard(cardking[1]);
+					p3.addcard(cardslave[0]);
+					p3.addcard(cardslave[1]);
+					p3.sortcard();p3.sortface();		
+					break;					
+				}
+			}
+			switch(lSlave){
+				case 1:{
+					p1.addcard(cardking[0]);
+					p1.addcard(cardking[1]);
+					p1.sortcard();p1.sortface();
+					break;
+				}
+				case 2: {
+					p2.addcard(cardking[0]);
+					p2.addcard(cardking[1]);
+					p2.sortcard();p2.sortface();			
+					break;
+				}
+				case 3:{
+					p3.addcard(cardking[0]);
+					p3.addcard(cardking[1]);
+					p3.sortcard();p3.sortface();			
+					break;
+				}				
+			}
+		}
+		
+
+		
 		while(true){
 
 		if(turnc==1){
@@ -463,15 +557,15 @@ int main(){
 			system("cls");
 			
 			if(kingchk==1&&kprintchk) {
-				cout << p1.Getname()<<"is the Winner!! and now \"KING\" \n";
+				cout <<"-------------"<< p1.Getname()<<"is the Winner!! and now \"KING\" "<<"--------------\n";
 				kprintchk=false;
 			}
 			else if(kingchk==2&&kprintchk) {
-				cout << p2.Getname()<<"is the Winner!! and now \"KING\" \n";
+				cout <<"-------------"<< p2.Getname()<<"is the Winner!! and now \"KING\" "<<"-------------\n";
 				kprintchk=false;
 			}
 			else if(kingchk==3&&kprintchk)  {
-				cout << p3.Getname()<<"is the Winner!! and now \"KING\" \n";
+				cout <<"-------------"<< p3.Getname()<<"is the Winner!! and now \"KING\" "<<"-------------\n";
 				kprintchk=false;
 			}
 			if(Table.size()>0) T_empty=false;
@@ -479,12 +573,12 @@ int main(){
 			
 			if(state==1){
 				
-				if(p2.plpass&&pass==2){
+				if(p2.plpass&&pass==playernum-1){
 					p1.newturn();
 					p2.newturn();
 					p3.newturn();
 				}					
-				if(pass==2)pass=0;
+				if(pass==playernum-1)pass=0;
 			
 				while(true){
 					
@@ -517,11 +611,7 @@ int main(){
 						}
 				}else{ // if player pass code goes here
 					pass++;
-					
-					if(pass==1){ //first pass
-						p1.pass();			
-						break;
-					}else if(pass==2){
+					if(pass==playernum-1){
 						Table.clear();
 						maxTable=0;
 						if(p2.plpass)state=3;
@@ -530,7 +620,11 @@ int main(){
 						p2.newturn();
 						p3.newturn();
 						break;
-					}	
+					}
+					else if(pass==1){ //first pass
+						p1.pass();			
+						break;
+					}						
 				}
 				
 				}
@@ -541,16 +635,19 @@ int main(){
 							system("cls");
 							kingchk=1;
 							endchk+=1;
+							playernum--;
 						}
 					}else {
 						if(p1.isWin()&&p1.Gettype()==K){
 							system("cls");
 							kingchk=1;
 							endchk+=1;
+							playernum--;
 						}else if(p1.isWin()&&p1.Gettype()!=K){
 							kingchk=1;
 							endchk+=1;
 							lKing=1;
+							playernum--;
 							if(p2.Gettype()==K){
 								cout << p1.Getname() << " is new King!! and "<< p2.Getname() <<" is slave\n";
 								lSlave=2;
@@ -568,7 +665,7 @@ int main(){
 						}				
 					}
 				}else {
-						if(p1.isEmptyHand()&&kingchk!=1){					
+						if(p1.isEmptyHand()&&kingchk!=1){				
 							endchk+=1;
 							if(endchk==2){
 								round++;
@@ -591,14 +688,14 @@ int main(){
 							}
 							}
 				} 	
-				if(pass!=2){
+				if(pass!=playernum-1){
 					if(p2.plpass)state=3;			
 					else state=2;
 				}
 				
 				
 			}else if(state==2){
-				if(pass==2)pass=0;
+				if(pass==playernum-1)pass=0;
 				while(true){
 					if(kingchk==2)break;
 					
@@ -629,19 +726,20 @@ int main(){
 						}
 					}else {
 						pass++;
-						if(pass==1){ //first pass
-						p2.pass();			
-						break;
-					}else if(pass==2){
-						Table.clear();
-						maxTable=0;
-						if(p3.plpass)state=1;
-						else state=3;
-						p1.newturn();
-						p2.newturn();
-						p3.newturn();
-						break;
-					}
+						if(pass==playernum-1){
+							Table.clear();
+							maxTable=0;
+							if(p3.plpass)state=1;
+							else state=3;
+							p1.newturn();
+							p2.newturn();
+							p3.newturn();
+							break;
+						}
+						else if(pass==1){ //first pass
+							p2.pass();			
+							break;
+						}
 					}
 				}
 				if(kingchk==0){
@@ -651,16 +749,19 @@ int main(){
 							system("cls");
 							kingchk=2;
 							endchk+=1;
+							playernum--;
 						}
 					}else {
 						if(p2.isWin()&&p2.Gettype()==K){
 							system("cls");
 							kingchk=2;
 							endchk+=1;
+							playernum--;
 						}else if(p2.isWin()&&p2.Gettype()!=K){
 							kingchk=2;
 							endchk+=1;
 							lKing=2;
+							playernum--;
 							if(p1.Gettype()==K){
 								cout << p2.Getname() << " is new King!! and "<< p1.Getname() <<" is slave\n";
 								lSlave=1;
@@ -703,7 +804,7 @@ int main(){
 					}
 					
 				}
-				if(pass!=2){
+				if(pass!=playernum-1){
 					if(p3.plpass)state=1;			
 					else state=3;	
 				}
@@ -741,11 +842,7 @@ int main(){
 						}
 					}else {
 						pass++;
-						
-						if(pass==1){ //first pass
-							p3.pass();			
-							break;
-						}else if(pass==2){
+						if(pass==playernum-1){
 							Table.clear();
 							maxTable=0;
 							if(p1.plpass)state=2;
@@ -753,6 +850,10 @@ int main(){
 							p1.newturn();
 							p2.newturn();
 							p3.newturn();
+							break;
+						}
+						else if(pass==1){ //first pass
+							p3.pass();			
 							break;
 						}	
 					}
@@ -764,16 +865,19 @@ int main(){
 							system("cls");
 							kingchk=3;
 							endchk+=1;
+							playernum--;
 						}
 					}else {
 						if(p3.isWin()&&p3.Gettype()==K){
 							system("cls");
 							kingchk=3;
 							endchk+=1;
+							playernum--;
 						}else if(p3.isWin()&&p3.Gettype()!=K){
 							kingchk=3;
 							endchk+=1;
 							lKing=3;
+							playernum--;
 							if(p1.Gettype()==K){
 								cout << p3.Getname() << " is new King!! and "<< p1.Getname() <<" is slave\n";
 								lSlave=2;
@@ -816,7 +920,7 @@ int main(){
 					}
 					
 				}
-				if(pass!=2){
+				if(pass!=playernum-1){
 					if(p1.plpass)state=2;
 					else state=1;
 				}
@@ -863,8 +967,6 @@ vector<int> ChooseCard(Player P,bool t_empty){
 	vector<int> order;
 	vector<int> cardChoose=P.GetCard();
 	vector<string> cFace=P.GetFace();
-	int choose1,choose2,choose3,choose4;
-//	vector<char> cardbag;
 	string strget;
 	for(int i=0;i<cardChoose.size();i++){
 		order.push_back(i);
@@ -891,7 +993,7 @@ vector<int> ChooseCard(Player P,bool t_empty){
 			getcard.clear();
 			cout<<"choose your [number] for card :";
 			getline(cin,strget);
-			if(strget=="P"||strget=="p")goto step1;
+			if(!is_digits(strget))goto step1;
 			stringstream stream(strget);
 			int n;
 			while(stream >> n) {
@@ -906,6 +1008,7 @@ vector<int> ChooseCard(Player P,bool t_empty){
 			cout<<"choose your [number] for card or [p] to pass ";
 			getline(cin,strget);
 			if(strget=="P"||strget=="p")break;
+			else if(!is_digits(strget))goto step1;
 			stringstream stream(strget);
 			int n;
 			while(stream >> n) {
@@ -930,8 +1033,56 @@ vector<int> ChooseCard(Player P,bool t_empty){
 		goto step1;
 		}
 	}
-	
-	
 	return getcard;
+}
+vector<int> TradeCard(Player P,bool t_empty){
+	bool chk;
+	vector<int> getcard;
+	vector<int> order;
+	vector<int> cardChoose=P.GetCard();
+	vector<string> cFace=P.GetFace();;
+	string strget;
+	for(int i=0;i<cardChoose.size();i++){
+		order.push_back(i);
+	}
+	for(int i=0;i<cFace.size();i++){
+		if(i<=9 && (cardChoose[i]>=28&&cardChoose[i]<=31)) cout << order[i] <<"   ";
+		else if(i<=9) cout << order[i] <<"  ";
+		else{
+			if(cardChoose[i]>=28&&cardChoose[i]<=31) cout << order[i] <<"  ";
+			else cout << order[i] <<" ";
+		} 	
+	}
 	
+	cout << "\n";
+	for(int i=0;i<cFace.size();i++){
+		cout << cFace[i]<< " ";
+	}
+	cout << "\n\n";
+		
+		TC1:
+		if(t_empty){
+			do{
+				getcard.clear();
+				cout<<"choose your [number] for card :";
+				getline(cin,strget);
+				if(!is_digits(strget))goto TC1;
+				stringstream stream(strget);
+				int n;
+				while(stream >> n) {
+  					getcard.push_back(cardChoose[n]);
+				}
+				if(getcard.size()==0) goto TC1;
+			}while(getcard.size()>4);
+		}
+
+		if(getcard.size()!=2) {
+			cout << "\n--------Please choose 2 card!!--------\n";
+			goto TC1;
+		}
+
+	return getcard;
+}
+bool is_digits(const string &str) {
+    return str.find_first_not_of("0123456789 ") == string::npos;
 }

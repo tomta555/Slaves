@@ -64,6 +64,8 @@ class Player{
 		void pass();
 		void newturn();
 		void typechange(string);
+		int popbackcard();
+		void addcard(int);
 
 };
 Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int first,int last){
@@ -78,6 +80,12 @@ Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int f
 		plfaces.push_back(f[i]);
 	}
 	sortedcards=plcards;
+}
+void Player::addcard(int add){
+	sortedcards.push_back(add);
+}
+int Player::popbackcard(){
+	return sortedcards.back();
 }
 void Player::typechange(string x){
 	type = x;
@@ -98,6 +106,7 @@ void Player::sortcard(){
 	sort(sortedcards.begin(),sortedcards.end());
 }
 void Player::sortface(){
+	sortedfaces.clear();
 	for(int i=0;i<cardcountcst;i++){
 		sortedfaces.push_back(allfaces[sortedcards[i]]);
 	}
