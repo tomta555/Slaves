@@ -51,6 +51,7 @@ class Player{
 		
 		Player(string,vector<string>,vector<int>,vector<string>,int,int);
 		bool plpass;
+		bool end;
 		vector<int> GetCard();
 		vector<string> GetFace();
 		string Getname();
@@ -62,6 +63,7 @@ class Player{
 		void eraseCard(int);
 		void decCardCount();
 		void pass();
+		void endd();
 		void newturn();
 		void typechange(string);
 		int popbackcard();
@@ -80,6 +82,10 @@ Player::Player(string n,vector<string> af ,vector<int> c, vector<string> f,int f
 		plfaces.push_back(f[i]);
 	}
 	sortedcards=plcards;
+	end=false;
+}
+void Player::endd(){
+	end=true;
 }
 void Player::addcard(int add){
 	sortedcards.push_back(add);
