@@ -11,7 +11,9 @@ vector<int> ChooseCard(Player, bool);
 int moreCard(vector<int> ,int);
 vector<int> TradeCard(Player, bool);
 bool is_digits(const string &);
-
+bool digit(const string &str) {
+    return str.find_first_not_of("234") == string::npos;
+}
 int main(){
 	mainmenu :
 	srand(unsigned(time(NULL)));
@@ -20,6 +22,7 @@ int main(){
 	vector<int> cardking;
 	int lKing,lSlave;
 	int num;
+	string numch;
 	int maxCard;
 	int maxTable;
 	vector<int> hand;
@@ -27,6 +30,7 @@ int main(){
 	int old_kingchk=0;
 	
 	start :
+		system("cls");
 	cout << "********************************************************************************************************\n";
 	cout << "********************************************************************************************************\n";
 	cout << "******                                                                                            ******\n";
@@ -53,14 +57,15 @@ int main(){
 	cout << "|		 F       UUU   LLLLL  LLLLL       SSSS    CCCC  R   R  EEEEE  EEEEE  N   NN  		  |\n" << "\n";
 	cout << "    ---------------------------------------------------------------------------------------------------\n\n";
 		
-	cout << "[1] Play with BOT(NOT AVALIABLE!!), [2] 2 Players, [3] 3 Players, [4] 4 Players\n"; //Add
+		
+	cout << "[2] 2 Players, [3] 3 Players, [4] 4 Players\n"; //Add
 	cout << "PLAY SELECT : ";  //Add
-	cin >> num;
-	
-	if(num>4) {
+	cin >> numch;
+	num=atoi(numch.c_str());
+	if(!digit(numch)) {
 		cout << "Please select again\n";
-		goto start;
-	}
+		goto start;			
+		}	
 	
 	string name[num];
 	cin.ignore();
@@ -71,7 +76,7 @@ int main(){
 	
 	playagain :
 		
-	Deck c1;
+	Deck c1;  
 	c1.ShuffleCard();
 	c1.ShuffleFace();
 
@@ -88,7 +93,7 @@ int main(){
 		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,26,52);
 		p1.sortcard(); p1.sortface(); p2.sortcard(); p2.sortface();  // sorting card that get from deck
 		gettmp=p1.GetCard();
-		
+		system("cls");
 		while(true){
 		if(turnc==1){
 			if(round==1){
@@ -557,15 +562,15 @@ int main(){
 			system("cls");
 			
 			if(kingchk==1&&kprintchk) {
-				cout <<"-------------"<< p1.Getname()<<"is the Winner!! and now \"KING\" "<<"--------------\n";
+				cout <<"\n\n\n------------------"<< p1.Getname()<<" is the Winner!! and now \"KING\" "<<"-------------------\n";
 				kprintchk=false;
 			}
 			else if(kingchk==2&&kprintchk) {
-				cout <<"-------------"<< p2.Getname()<<"is the Winner!! and now \"KING\" "<<"-------------\n";
+				cout <<"\n\n\n------------------"<< p2.Getname()<<" is the Winner!! and now \"KING\" "<<"------------------\n";
 				kprintchk=false;
 			}
 			else if(kingchk==3&&kprintchk)  {
-				cout <<"-------------"<< p3.Getname()<<"is the Winner!! and now \"KING\" "<<"-------------\n";
+				cout <<"\n\n\n------------------"<< p3.Getname()<<" is the Winner!! and now \"KING\" "<<"------------------\n";
 				kprintchk=false;
 			}
 			if(Table.size()>0) T_empty=false;
@@ -829,7 +834,7 @@ int main(){
 						maxCard=*max_element(hand.begin(),hand.end());   // find maximun value of cards on hand to compare with value of cards on table
 						maxCard=moreCard(hand,maxCard);
 						if(maxCard<maxTable){					// if cards on hand are less value than cards on the table ->  choose cards again! 
-//							cout << "\n--------Choose your card again--------\n";	
+//							cout << "\n--------Choose your card again--------\n";
 						}else{
 							Table.clear();
 							for(int i=0;i<hand.size();i++){
@@ -930,10 +935,10 @@ int main(){
 
 		}
 	}else if(num==4){
-		Player p1(name[0],c1.cardFace,c1.cards,c1.faceShuff,0,3);
-		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,4,7);
-		Player p3(name[2],c1.cardFace,c1.cards,c1.faceShuff,8,11);
-		Player p4(name[3],c1.cardFace,c1.cards,c1.faceShuff,12,15);
+		Player p1(name[0],c1.cardFace,c1.cards,c1.faceShuff,0,13);
+		Player p2(name[1],c1.cardFace,c1.cards,c1.faceShuff,13,26);
+		Player p3(name[2],c1.cardFace,c1.cards,c1.faceShuff,26,39);
+		Player p4(name[3],c1.cardFace,c1.cards,c1.faceShuff,39,52);
 		p1.sortcard();p1.sortface();p2.sortcard();p2.sortface();p3.sortcard();p3.sortface();p4.sortcard();p4.sortface();
 		bool kprintchk=true;
 		char paga='\0';
@@ -996,7 +1001,7 @@ int main(){
 		cout <<"-------------" << p3.Getname() << " is " << p3.Gettype() <<"-------------"<<"\n\n"; 
 		cout <<"-------------" << p4.Getname() << " is " << p4.Gettype() <<"-------------"<<"\n\n"; 
 		
-		cout<< "-----------------King select 2 cards to trade with slave-----------------\n";
+		cout<< "\n\n-----------------King select 2 cards to trade with slave-----------------\n\n";
 		cin.ignore();
 		if(lSlave==1){
 			cardslave.push_back(p1.popbackcard());
@@ -1147,7 +1152,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 					
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 					
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1157,7 +1162,7 @@ int main(){
 					}
 					maxTable=maxCard;				
 					break;
-//				}else cout << "\n--------There is no 3\5 in your selected card, choose your card again--------\n"; 
+				}else cout << "\n\n--------There is no 3\5 in your selected card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1178,7 +1183,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 			
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 						
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1187,7 +1192,7 @@ int main(){
 					}
 					maxTable=maxCard;	
 					break;
-//				}else cout << "\n--------There is no 3\5 in your selected card, choose your card again--------\n"; 
+				}else cout << "\n\n--------There is no 3\5 in your selected card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1208,7 +1213,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 				
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 				
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1217,7 +1222,7 @@ int main(){
 					}
 					maxTable=maxCard;				// if value of cards on hand > value of cards on table you can use that cards -> put card on table
 					break;
-//				}else cout << "\n--------There is no 3\5 in your selected card, choose your card again--------\n"; 
+				}else cout << "\n\n--------There is no 3\5 in your selected card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1238,7 +1243,7 @@ int main(){
 				maxCard=moreCard(hand,maxCard);
 				if(round==1){
 				
-//				if(find(hand.begin(),hand.end(),0) != hand.end()){
+				if(find(hand.begin(),hand.end(),0) != hand.end()){
 				
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1247,7 +1252,7 @@ int main(){
 					}
 					maxTable=maxCard;				// if value of cards on hand > value of cards on table you can use that cards -> put card on table
 					break;
-//				}else cout << "\n--------There is no 3\5 in your selected card, choose your card again--------\n"; 
+				}else cout << "\n\n--------There is no 3\5 in your selected card, choose your card again--------\n\n"; 
 				}else {
 					for(int i=0;i<hand.size();i++){
 						Table.push_back(tmpface[hand[i]]);
@@ -1356,7 +1361,7 @@ int main(){
 					if(round==1){
 						if(p1.isWin()){
 							lKing=1;
-//							system("cls");
+							system("cls");
 							kingchk=1;
 							endchk+=1;
 							playernum--;
@@ -1364,7 +1369,7 @@ int main(){
 						}
 					}else{
 						if(p1.isWin()&&p1.Gettype()==K){
-//							system("cls");
+							system("cls");
 							kingchk=1;
 							endchk+=1;
 							p1.endd();
@@ -1401,7 +1406,7 @@ int main(){
 							endchk+=1;
 							if(endchk==3){
 								round++;
-//								system("cls");
+								system("cls");
 								cout << "You are People\n";
 								if((kingchk==2&&people==3)||(kingchk==3&&people==2)){
 									cout << p4.Getname() <<" is now slave \n ";
@@ -1495,7 +1500,7 @@ int main(){
 					if(round==1){
 						if(p2.isWin()){
 							lKing=2;
-//							system("cls");
+							system("cls");
 							kingchk=2;
 							endchk+=1;
 							p2.endd();
@@ -1503,7 +1508,7 @@ int main(){
 						}
 					}else {
 						if(p2.isWin()&&p2.Gettype()==K){
-//							system("cls");
+							system("cls");
 							kingchk=2;
 							endchk+=1;
 							p2.endd();
@@ -1539,7 +1544,7 @@ int main(){
 						p2.endd();
 						endchk+=1;
 						if(endchk==3){
-//							system("cls");
+							system("cls");
 							round++;
 							cout << "You are People\n";
 							if((kingchk==1&&people==3)||(kingchk==3&&people==1)){
@@ -1636,7 +1641,7 @@ int main(){
 					if(round==1){
 						if(p3.isWin()){
 							lKing=3;
-//							system("cls");
+							system("cls");
 							kingchk=3;
 							endchk+=1;
 							p3.endd();
@@ -1644,7 +1649,7 @@ int main(){
 						}
 					}else {
 						if(p3.isWin()&&p3.Gettype()==K){
-//							system("cls");
+							system("cls");
 							kingchk=3;
 							endchk+=1;
 							p3.endd();
@@ -1680,7 +1685,7 @@ int main(){
 						p3.endd();
 						endchk+=1;
 						if(endchk==3){
-//							system("cls");
+							system("cls");
 							round++;
 							cout << "You are now People\n";
 							if((kingchk==1&&people==2)||(kingchk==2&&people==1)) {
@@ -1776,7 +1781,7 @@ int main(){
 					if(round==1){
 						if(p4.isWin()){
 							lKing=4;
-//							system("cls");
+							system("cls");
 							kingchk=4;
 							endchk+=1;
 							p4.endd();
@@ -1784,7 +1789,7 @@ int main(){
 						}
 					}else {
 						if(p4.isWin()&&p4.Gettype()==K){
-//							system("cls");
+							system("cls");
 							kingchk=4;
 							endchk+=1;
 							p4.endd();
@@ -1820,7 +1825,7 @@ int main(){
 						p4.endd();
 						endchk+=1;
 						if(endchk==3){
-//							system("cls");
+							system("cls");
 							round++;
 							cout << "You are now People\n";
 							if((kingchk==1&&people==3)||(kingchk==3&&people==1)) {
@@ -1912,6 +1917,7 @@ vector<int> ChooseCard(Player P,bool t_empty){
 			stringstream stream(strget);
 			int n;
 			while(stream >> n) {
+				if(n>cardChoose.size()) goto step1;
   				getcard.push_back(cardChoose[n]);
   				get1tmp=getcard.size();
 			}
@@ -1920,15 +1926,16 @@ vector<int> ChooseCard(Player P,bool t_empty){
 		}else {
 				do{
 			getcard.clear();
-			cout<<"choose your [number] for card or [p] to pass ";
+			cout<<"choose your [number] for card or [p] to pass :";
 			getline(cin,strget);
 			if(strget=="P"||strget=="p")break;
 			else if(!is_digits(strget))goto step1;
 			stringstream stream(strget);
 			int n;
 			while(stream >> n) {
+				if(n>cardChoose.size()) goto step1;
   				getcard.push_back(cardChoose[n]);
-			}
+			} 
 			if(getcard.size()==0) goto step1;
 		}while(getcard.size()>4);
 		
@@ -1979,12 +1986,13 @@ vector<int> TradeCard(Player P,bool t_empty){
 		if(t_empty){
 			do{
 				getcard.clear();
-				cout<<"choose your [number] for card :";
+				cout<<"Choose your [number] for card :";
 				getline(cin,strget);
 				if(!is_digits(strget))goto TC1;
 				stringstream stream(strget);
 				int n;
 				while(stream >> n) {
+					if(n>cardChoose.size()) goto TC1;
   					getcard.push_back(cardChoose[n]);
 				}
 				if(getcard.size()==0) goto TC1;
